@@ -1,5 +1,8 @@
-export function Header() {
-  const header = document.createElement("header");
-  header.textContent = "Majesty Immigration Services";
-  return header;
-}
+
+import html from "html-literal";
+
+export default (state) => html`
+  <header>
+    <h1>${state.header}</h1>
+  </header>
+  `;

@@ -1,8 +1,8 @@
-export function Footer() {
-  const footer = document.createElement("footer");
-  footer.innerHTML = `
+import html from "html-literal";
+
+export default () => html`
+<footer>
     <p>&copy; 2025 Majesty Immigration Services. All rights reserved.</p>
     <p>LinkedIn || GitHub</p>
-  `;
-  return footer;
-}
+<footer>
+`;
