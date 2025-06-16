@@ -1,7 +1,7 @@
 import html from "html-literal";
 
 export default () => html`
-<section id="contact">
+ <section id="contact">
     <h2>Contact Us</h2>
     <form>
       <label for="name">Name:</label>

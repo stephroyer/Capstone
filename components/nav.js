@@ -5,19 +5,13 @@ import navItem from "./navItem.js";
 export default navItems => {
   return html`
     <nav>
-      <i class="fas fa-bars"></i>
-      <ul class="">
+      <id class="menu"></id>
+      <ul class="nav-links">
         ${navItems.map(item => navItem(item)).join("")}
       </ul>
     </nav>
-  `
-}
-
-
-
-
-
-
+  `;
+};
 
 // export function Nav() {
 //   const nav = document.createElement("nav");
