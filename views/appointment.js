@@ -1,10 +1,9 @@
-export default function Appointment() {
-    const section = document.createElement("section");
-    section.className = "appointment";
-    section.innerHTML = `
+import html from "html-literal";
+
+export default () => html `
+  <section id="appointment">
     <h2>Schedule an Appointment</h2>
     <form>
-
       <label for="service">Select Service:</label>
       <select id="service" name="service">
         <option value="tps">TPS</option>
@@ -20,9 +19,7 @@ export default function Appointment() {
       <label for="zipcode">Zip code:</label>
       <input type="number" id="zipcode" name="zipcode" required />
 
-
       <button type="submit">Submit</button>
     </form>
-  `;
-    return section;
-}
+  </section>
+`;
