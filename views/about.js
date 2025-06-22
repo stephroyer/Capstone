@@ -5,6 +5,9 @@ export default () => html`
     <h2>Our Mission</h2>
     <p>Focus on Accessibility, support and legal AID</p>
     <p>Meet our Team</p>
-    <p>Stephanie Royer &nbsp;&nbsp;&nbsp; Rougens Jules &nbsp;&nbsp;&nbsp; Margarette Alceus</p>
+    <p>
+      Stephanie Royer &nbsp;&nbsp;&nbsp; Rougens Jules &nbsp;&nbsp;&nbsp;
+      Margarette Alceus
+    </p>
   </section>
 `;
