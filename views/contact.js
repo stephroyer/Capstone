@@ -1,6 +1,11 @@
 import html from "html-literal";
+import officeAddressBookIcon from "../images/office-address-book-icon.png";
+import phoneIcon from "../images/phone-icon.png";
+import serviceIcon from "../images/Service-icon.png";
+import emailIcon from "../images/email-icon.png";
+//import state from '../components/header';
 
-export default () => html`
+export default state => html`
   <section id="contact">
     <h2>Contact Us</h2>
     <form>
@@ -15,9 +20,22 @@ export default () => html`
 
       <button type="submit">Send Message</button>
     </form>
-    <p>Office Hours: Mon-Fri, 9 AM - 5 PM</p>
-    <p>Address: 3172 Arkansas Ave Saint Louis MO 63118</p>
-    <p>Phone: 314 376 8259</p>
-    <p>Email: Contact@majestyimmigrationservices</p>
+
+    <h3>Contact Information</h3>
+    <p><img src="${serviceIcon}" alt="service hours" />Mon-Fri, 9 AM - 5 PM</p>
+    <p>
+      <img src="${officeAddressBookIcon}" alt="me" /> 3172 Arkansas Ave Saint
+      Louis MO 63118
+    </p>
+    <p><img src="${phoneIcon}" alt="phone" /> 314 376 8259</p>
+    <p>
+      <img src="${emailIcon}" alt="email" /> Contact@majestyimmigrationservices
+    </p>
+
+    <h3>
+      The weather in ${state.weather.city} is ${state.weather.description}.
+      Temperature is ${state.weather.temp}F, and it feels like
+      ${state.weather.feelsLike}F.
+    </h3>
   </section>
 `;

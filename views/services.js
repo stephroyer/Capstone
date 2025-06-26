@@ -1,6 +1,7 @@
 import html from "html-literal";
 
-export default (state) => html`
+
+export default (state) => html `
   <section id="services">
     <h2>Our Services</h2>
     <ul>
