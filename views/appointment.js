@@ -1,6 +1,6 @@
 import html from "html-literal";
 
-export default () => html `
+export default () => html`
   <section id="appointment">
     <h2>Schedule an Appointment</h2>
     <form>
@@ -21,5 +21,6 @@ export default () => html `
 
       <button type="submit">Submit</button>
     </form>
+    <p id="confirmation"></p>
   </section>
 `;

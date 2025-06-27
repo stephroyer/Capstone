@@ -18,36 +18,9 @@ function render(state = store.home) {
 
 router.hooks({
     before: (done, match) => {
-        const view = match ? .data ? .view ? camelCase(match.data.view) : "appointment";
+        const view = match?.data?.view ? camelCase(match.data.view) : "home";
         console.info("Before hook executing");
         switch (view) {
-
-            case 'appointment':
-                document.addEventListener("DOMContentLoaded", function() {
-                    const appointmentForm = document.querySelector("#appointment form");
-                    const confirmationMessage = document.createElement("p");
-                    confirmationMessage.style.color = "blue";
-                    confirmationMessage.style.marginTop = "1rem";
-                    confirmationMessage.style.fontSize = "1rem";
-                    confirmationMessage.style.fontWeight = "bold";
-                    appointmentForm.parentNode.appendChild(confirmationMessage);
-                    appointmentForm.addEventListener("submit", function(e) {
-                        e.preventDefault();
-                        const service = document.getElementById("service").value;
-                        const date = document.getElementById("date").value;
-                        const zipCode = document.getElementById("zipcode").value;
-                        if (!service || !date) {
-                            alert("Please select a service and a date.");
-                            return;
-                        }
-                        getCitiesByZipCode(zipCode).then(city => {
-                            confirmationMessage.textContent = ` Your appointment for "${service}" on ${date} has been scheduled successfully at "${city}".`;
-                        });
-                        appointmentForm.reset(); // Reset the form after submission
-                    });
-                });
-                done();
-                break;
 
 
             case "contact":
@@ -75,21 +48,48 @@ router.hooks({
         }
     },
     already: (match) => {
-        const view = match ? .data ? .view ? camelCase(match.data.view) : "home";
+        const view = match?.data?.view ? camelCase(match.data.view) : "home";
         console.log("redenring view", view);
         render(store[view]);
     },
-    after: (match) => {
+            after: (match) => {
         console.info("After hook executing");
+        const view = match?.data?.view ? camelCase(match.data.view) : "home";
+
+        if (view === "appointment") {
+            const appointmentForm = document.querySelector("#appointment form")
+            appointmentForm.addEventListener("submit", function(event) {
+                const confirmationMessage = document.getElementById("confirmation");
+                event.preventDefault();
+
+                const inputs = event.target.elements;
+
+                const service = inputs.service.value;
+                const date = inputs.date.value;
+                const zipCode = inputs.zipcode.value;
+
+                if (!service || !date) {
+                    alert("Please select a service and a date.");
+                    return;
+                }
+
+                getCitiesByZipCode(zipCode).then(city => {
+                    confirmationMessage.textContent = ` Your appointment for "${service}" on ${date} has been scheduled successfully at "${city}".`;
+                });
+
+                appointmentForm.reset(); // Reset the form after submission
+            });
+        }
+
         router.updatePageLinks();
         // add menu toggle to bars icon in nav bar
         document.querySelector(".menu").addEventListener("click", () => {
             document.querySelector("nav > ul").classList.toggle("hidden--mobile");
         });
-    }
-});
+          }
+    });
 
-router.on({
+    router.on({
     "/": () => render(),
     // The :view slot will match any single URL segment that appears directly after the domain name and a slash
     '/:view': function(match) {
@@ -98,7 +98,7 @@ router.on({
         // match.data.view will be 'about-me'
         // Using Lodash's camelCase to convert kebab-case to camelCase:
         // 'about-me' becomes 'aboutMe'
-        const view = match ? .data ? .view ? camelCase(match.data.view) : "home";
+        const view = match?.data?.view ? camelCase(match.data.view) : "home";
 
         // If the store import/object has a key named after the view
         if (view in store) {
@@ -114,88 +114,11 @@ router.on({
 
 
 async function getCitiesByZipCode(zipCode) {
-    const authkey = "238220540985518055";
-    return axios.get(`https://us-zipcode.api.smarty.com/lookup?key=${authkey}&zipcode=${zipCode}`)
+
+    return axios.get(`https://us-zipcode.api.smarty.com/lookup?key=${process.env.ZIPCODE_API_URL}&zipcode=${zipCode}`)
         .then(response => {
             return response.data[0].city_states[0].city;
         })
+
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const app = document.getElementById("app");
-
-// async function getCitiesByZipCode(zipCode) {
-//   const authkey= "238220540985518055";
-//     return axios.get(`https://us-zipcode.api.smarty.com/lookup?key=${authkey}&zipcode=${zipCode}`)
-//                 .then(response => {
-//                     return response.data[0].city_states[0].city;
-//                 })
-//   }
-
-// function renderApp() {
-//   app.innerHTML = "";
-//   app.appendChild(Header());
-//   app.appendChild(Nav());
-//   app.appendChild(Main());
-//   app.appendChild(Footer());
-// }
-
-// window.addEventListener("popstate", () => {
-//   renderApp();
-// });
-
-// renderApp();
-
-// document.addEventListener("DOMContentLoaded", function() {
-//   const appointmentForm = document.querySelector(".appointment form");
-//   const confirmationMessage = document.createElement("p");
-//   confirmationMessage.style.color = "blue";
-//   confirmationMessage.style.marginTop = "1rem";
-//   confirmationMessage.style.fontSize = "1rem";
-//   confirmationMessage.style.fontWeight = "bold";
-
-//   appointmentForm.parentNode.appendChild(confirmationMessage);
-
-//   appointmentForm.addEventListener("submit", function(e) {
-//     e.preventDefault();
-
-
-//     const service = document.getElementById("service").value;
-//     const date = document.getElementById("date").value;
-//     const zipCode = document.getElementById("zipcode").value;
-
-//     if (!service || !date) {
-//       alert("Please select a service and a date.");
-//       return;
-//     }
-//     getCitiesByZipCode(zipCode).then( city => {
-//          confirmationMessage.textContent = ` Your appointment for "${service}" on ${date} has been scheduled successfully at "${city}".`;
-//     });
-
-
-
-
-//     appointmentForm.reset(); // Reset the form after submission
-//   });
-// });
