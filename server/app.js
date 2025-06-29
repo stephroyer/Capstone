@@ -35,7 +35,7 @@ app.use(logging);
 
 // Handle the request with HTTP GET method from http://localhost:3000/
 app.get("/", (request, response) => {
-  response.send("Welcome to the Class SPA REST API");
+  response.send("Welcome to the Majesty Immigration Services ");
 });
 
 // Handle the request with HTTP GET method from http://localhost:3000/status
@@ -73,8 +73,6 @@ app.get("/weather/:city", (request, response) => {
     city
   });
 });
-//except this
-// app.use("/pizzas", pizzas);
 
 // Tell the Express app to start listening
 // Let the humans know I am running and listening on 3000
