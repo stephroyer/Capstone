@@ -1,8 +1,8 @@
 import html from "html-literal";
-import officeAddressBookIcon from "../images/office-address-book-icon.png";
-import phoneIcon from "../images/phone-icon.png";
-import serviceIcon from "../images/Service-icon.png";
-import emailIcon from "../images/email-icon.png";
+import officeAddressBookIcon from "url:../images/office-address-book-icon.png";
+import phoneIcon from "url:../images/phone-icon.png";
+import serviceIcon from "url:../images/Service-icon.png";
+import emailIcon from "url:../images/email-icon.png";
 //import state from '../components/header';
 
 export default state => html`

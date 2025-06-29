@@ -15,10 +15,12 @@ header {
 
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     background-color: red;
+    padding:0 10px ;
 }
+
 
 .logo {
     font-size: 1.5rem;

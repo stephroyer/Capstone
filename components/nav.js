@@ -4,8 +4,7 @@ import navItem from "./navItem.js";
 
 export default navItems => {
   return html`
-    <nav>
-      <id class="menu"></id>
+    <nav class="menu">
       <ul class="nav-links">
         ${navItems.map(item => navItem(item)).join("")}
       </ul>
