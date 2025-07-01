@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import userappcontroller from "./controllers/usersappt.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -32,6 +33,7 @@ const logging = (request, response, next) => {
 app.use(cors());
 app.use(express.json());
 app.use(logging);
+app.use("/appointments", userappcontroller);
 
 // Handle the request with HTTP GET method from http://localhost:3000/
 app.get("/", (request, response) => {
