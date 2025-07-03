@@ -1,5 +1,5 @@
 import { Router } from "express";
-import Appointment from "../models/userappt";
+import Appointment from "../models/userappt.js";
 
 const router = Router();
 
@@ -61,6 +61,41 @@ router.delete("/:id", async (request, response) => {
   } catch (error) {
     // Output error to the console incase it fails to send in response
     console.log(error);
+
+    return response.status(500).json(error.errors);
+  }
+});
+
+// Update a Appointment by ID
+router.put("/:id", async (request, response) => {
+  try {
+    const body = request.body;
+
+    const data = await Appointment.findByIdAndUpdate(
+      request.params.id,
+      {
+        $set: {
+          name: body.name,
+          email: body.email,
+          date: body.date,
+          services: body.services,
+          language: body.language,
+          zipcode: body.zipcode
+        }
+      },
+      {
+        new: true,
+        runValidators: true
+      }
+    );
+
+    response.json(data);
+  } catch (error) {
+    // Output error to the console incase it fails to send in response
+    console.log(error);
+
+    if ("name" in error && error.name === "ValidationError")
+      return response.status(400).json(error.errors);
 
     return response.status(500).json(error.errors);
   }

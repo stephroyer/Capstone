@@ -3,6 +3,7 @@ import * as store from "./store";
 import Navigo from "navigo";
 import axios from "axios";
 import { camelCase } from "lodash";
+// import nodemailer from "nodemailer";
 
 const router = new Navigo("/");
 
@@ -64,8 +65,11 @@ router.hooks({
 
                 const inputs = event.target.elements;
 
+                const name = inputs.name.value;
+                const email = inputs.email.value;
                 const service = inputs.service.value;
                 const date = inputs.date.value;
+                const language = inputs.language.value;
                 const zipCode = inputs.zipcode.value;
 
                 if (!service || !date) {
@@ -74,7 +78,16 @@ router.hooks({
                 }
 
                 getCitiesByZipCode(zipCode).then(city => {
-                    confirmationMessage.textContent = ` Your appointment for "${service}" on ${date} has been scheduled successfully at "${city}".`;
+                    confirmationMessage.textContent = `hello "${name}" thank you for trust us!!! Your appointment for "${service}" on ${date} has been scheduled successfully at "${city}".`;
+                });
+                saveAppointment({
+                    name: name,
+                    email: email,
+                    services: service,
+                    date: date,
+                    language: language,
+                    zipCode: zipCode
+
                 });
 
                 appointmentForm.reset(); // Reset the form after submission
@@ -120,5 +133,25 @@ async function getCitiesByZipCode(zipCode) {
             return response.data[0].city_states[0].city;
         })
 
+
+
 }
+ async function saveAppointment(formData) {
+    axios.post('http://localhost:3000/appointments', {
+
+      Name: formData.name,
+      Email: formData.email,
+      Date: formData.date,
+      Zipcode: formData.zipCode,
+      Language: formData.language,
+      Services: formData.services,
+  } ).then(response => {
+     console.log("Appointment saved successfully", response.data);
+      if (response.statusText === 'Ok') {
+
+
+      }
+      });
+}
+
 

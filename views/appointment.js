@@ -4,6 +4,12 @@ export default () => html`
   <section id="appointment">
     <h2>Schedule an Appointment</h2>
     <form>
+      <label for="name">Enter your full name:</label>
+      <input type="string" id="name" name="name" required />
+
+      <label for="email">Enter your email address</label>
+      <input type="email" id="email" name="email" required />
+
       <label for="service">Select Service:</label>
       <select id="service" name="service">
         <option value="tps">TPS</option>
@@ -15,7 +21,14 @@ export default () => html`
 
       <label for="date">Choose Date:</label>
       <input type="date" id="date" name="date" required />
-
+      <label for="language">Select your language:</label>
+      <select id="language" name="language">
+        <option value="english">English</option>
+        <option value="spanish">Spanish</option>
+        <option value="french">French</option>
+        <option value="arabic">Arabic</option>
+        <option value="chinese">Chinese</option>
+      </select>
       <label for="zipcode">Zip code:</label>
       <input type="number" id="zipcode" name="zipcode" required />
 
