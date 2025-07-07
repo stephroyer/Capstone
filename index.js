@@ -3,6 +3,8 @@ import * as store from "./store";
 import Navigo from "navigo";
 import axios from "axios";
 import { camelCase } from "lodash";
+import emailjs from "@emailjs/browser";
+
 // import nodemailer from "nodemailer";
 
 const router = new Navigo("/");
@@ -72,14 +74,15 @@ router.hooks({
                 const language = inputs.language.value;
                 const zipCode = inputs.zipcode.value;
 
-                if (!service || !date) {
-                    alert("Please select a service and a date.");
+                if (!service || !date || !zipCode || !name || !email || !language) {
+                    alert("Please fill out all fields.");
                     return;
                 }
 
                 getCitiesByZipCode(zipCode).then(city => {
                     confirmationMessage.textContent = `hello "${name}" thank you for trust us!!! Your appointment for "${service}" on ${date} has been scheduled successfully at "${city}".`;
                 });
+
                 saveAppointment({
                     name: name,
                     email: email,
@@ -90,39 +93,71 @@ router.hooks({
 
                 });
 
+                sendEmailApt(email,name);
                 appointmentForm.reset(); // Reset the form after submission
             });
         }
 
-        router.updatePageLinks();
-        // add menu toggle to bars icon in nav bar
-        document.querySelector(".menu").addEventListener("click", () => {
-            document.querySelector("nav > ul").classList.toggle("hidden--mobile");
-        });
-          }
+        if (view === "contact") {
+        // add event listener to contact form
+        const contactForm = document.querySelector("#ContactForm form");
+        contactForm.addEventListener("submit", function(event) {
+                const confirmationMessage = document.getElementById("confirmationContact");
+                event.preventDefault();
+
+                const inputs = event.target.elements;
+
+                const name = inputs.name.value;
+                const email = inputs.email.value;
+                const message = inputs.message.value;
+
+                if (!name || !email || !message) {
+                    alert("Please fill out all fields.");
+                    return;
+                }
+                confirmationMessage.textContent = `Thank you for your message, ${name}. We will get back to you at ${email} soon.`;
+
+                    contactForm.reset(); // Reset the form after submission
+
+                saveContact({
+                    NameUser: name,
+                    EmailUser: email,
+                    MessageUser: message
+                });
+                 sendEmailcont(name,email);
+
+            });
+            }
+
+            router.updatePageLinks();
+            // add menu toggle to bars icon in nav bar
+            document.querySelector(".menu").addEventListener("click", () => {
+                document.querySelector("nav > ul").classList.toggle("hidden--mobile");
+            });
+        }
     });
 
-    router.on({
-    "/": () => render(),
-    // The :view slot will match any single URL segment that appears directly after the domain name and a slash
-    '/:view': function(match) {
-        console.info("Route handler executing");
-        // If URL is '/about-me':
-        // match.data.view will be 'about-me'
-        // Using Lodash's camelCase to convert kebab-case to camelCase:
-        // 'about-me' becomes 'aboutMe'
-        const view = match?.data?.view ? camelCase(match.data.view) : "home";
+        router.on({
+            "/": () => render(),
+        // The :view slot will match any single URL segment that appears directly after the domain name and a slash
+        '/:view': function(match) {
+            console.info("Route handler executing");
+            // If URL is '/about-me':
+            // match.data.view will be 'about-me'
+            // Using Lodash's camelCase to convert kebab-case to camelCase:
+            // 'about-me' becomes 'aboutMe'
+            const view = match?.data?.view ? camelCase(match.data.view) : "home";
 
-        // If the store import/object has a key named after the view
-        if (view in store) {
-            // Then the invoke the render function using the view state, using the view name
-            render(store[view]);
-        } else {
-            // If the store
-            render(store.viewNotFound);
-            console.log(`View ${view} not defined`);
+            // If the store import/object has a key named after the view
+            if (view in store) {
+                // Then the invoke the render function using the view state, using the view name
+                render(store[view]);
+            } else {
+                // If the store
+                render(store.viewNotFound);
+                console.log(`View ${view} not defined`);
+            }
         }
-    }
 }).resolve();
 
 
@@ -136,7 +171,73 @@ async function getCitiesByZipCode(zipCode) {
 
 
 }
- async function saveAppointment(formData) {
+
+
+export default function sendEmailApt(email,name ) {
+  const templateParams = {
+    name: name,
+    title: "Appointment Confirmation",
+    message: "Thank you for scheduling an appointment with us. We will contact you soon.",
+    email: email
+  };
+
+  emailjs
+    .send("service_jxkehml", "template_3363wyo", templateParams, {
+      publicKey: `${process.env.PUBLIC_KEY_SENDEMAIL}`,
+
+    })
+    .then(
+      response => {
+        console.log("SUCCESS!", response.status, response.text);
+      },
+      err => {
+        console.log("FAILED...", err);
+      }
+    );
+}
+
+
+
+ function sendEmailcont(name, email) {
+  const templateParams2 = {
+    NameUser : name,
+    title: "Message Confirmation",
+    MessageUser: "Thank you for contact us.",
+    email: email
+  };
+
+  emailjs
+    .send("service_jxkehml", "template_nxcnrnj", templateParams2, {
+      publicKey: `${process.env.PUBLIC_KEY_SENDEMAIL}`,
+
+    })
+    .then(
+      response => {
+        console.log("SUCCESS!", response.status, response.text);
+      },
+      err => {
+        console.log("FAILED...", err);
+      }
+    );
+}
+
+
+async function saveContact(formData) {
+    axios.post('http://localhost:3000/Contact', {
+
+      NameUser: formData.NameUser,
+      EmailUser: formData.EmailUser,
+      MessageUser: formData.MessageUser,
+    } ).then(response => {
+
+     console.log("Contact saved successfully", response.data);
+      if (response.statusText === 'Ok') {
+        // You can add any logic here if needed when status is 'Ok'
+      }
+    });
+}
+
+async function saveAppointment(formData) {
     axios.post('http://localhost:3000/appointments', {
 
       Name: formData.name,
@@ -148,10 +249,7 @@ async function getCitiesByZipCode(zipCode) {
   } ).then(response => {
      console.log("Appointment saved successfully", response.data);
       if (response.statusText === 'Ok') {
-
-
+        // You can add any logic here if needed when status is 'Ok'
       }
-      });
+    });
 }
-
-

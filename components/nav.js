@@ -15,7 +15,6 @@ export default navItems => {
 // export function Nav() {
 //   const nav = document.createElement("nav");
 //   nav.innerHTML = `
-//     <div class="logo"><img src="Majesty logo.png" alt="Majesty immigration services"></div>
 //     <ul class="nav-links">
 //       <li><a href="#home">Home</a></li>
 //       <li><a href="#about">About Us</a></li>

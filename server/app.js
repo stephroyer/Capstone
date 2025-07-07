@@ -4,6 +4,10 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userappcontroller from "./controllers/usersappt.js";
+import usercontactcontroller from "./controllers/userscontact.js";
+
+// Import the dotenv module to load environment variables
+// This allows us to use a .env file to store sensitive information like database connection strings
 
 // Load environment variables from .env file
 dotenv.config();
@@ -34,6 +38,7 @@ app.use(cors());
 app.use(express.json());
 app.use(logging);
 app.use("/appointments", userappcontroller);
+app.use("/contact", usercontactcontroller);
 
 // Handle the request with HTTP GET method from http://localhost:3000/
 app.get("/", (request, response) => {

@@ -6,8 +6,13 @@ import emailIcon from "url:../images/email-icon.png";
 //import state from '../components/header';
 
 export default state => html`
-  <section id="contact">
-    <h2>Contact Us</h2>
+  <section class="contact" id="ContactForm">
+    <h1>Contact Us</h1>
+
+    <p>
+      If you have any questions or need assistance, we’d love to hear from you.
+      Fill out the form below or reach us through the provided contact details.
+    </p>
     <form>
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" required />
@@ -20,22 +25,35 @@ export default state => html`
 
       <button type="submit">Send Message</button>
     </form>
+    <p id="confirmationContact"></p>
+    <div class="contact-info">
+      <h2>Contact Information</h2>
 
-    <h3>Contact Information</h3>
-    <p><img src="${serviceIcon}" alt="service hours" />Mon-Fri, 9 AM - 5 PM</p>
-    <p>
-      <img src="${officeAddressBookIcon}" alt="me" /> 3172 Arkansas Ave Saint
-      Louis MO 63118
-    </p>
-    <p><img src="${phoneIcon}" alt="phone" /> 314 376 8259</p>
-    <p>
-      <img src="${emailIcon}" alt="email" /> Contact@majestyimmigrationservices
-    </p>
+      <p>
+        <img src="${serviceIcon}" alt="service hours" />Mon-Fri, 9 AM - 5 PM
+      </p>
+      <p>
+        <img src="${officeAddressBookIcon}" alt="me" /> 3172 Arkansas Ave Saint
+        Louis MO 63118
+      </p>
 
-    <h3>
+      <p>
+        <img src="${phoneIcon}" alt="Phone Icon" />
+        <a href="tel:3143455709">314 345 5709</a>
+      </p>
+      <p>
+        <img src="${emailIcon}" alt="Email Icon" />
+        <a href="mailto:Contact@majestyimmigrationservices"
+          >Contact@majestyimmigrationservices</a
+        >
+      </p>
+    </div>
+    <p id="confirmationContact"></p>
+
+    <h2>
       The weather in ${state.weather.city} is ${state.weather.description}.
       Temperature is ${state.weather.temp}F, and it feels like
       ${state.weather.feelsLike}F.
-    </h3>
+    </h2>
   </section>
 `;

@@ -3,7 +3,7 @@ import Majestylogo from "url:../images/Majesty_logo.png";
 
 export default state => html`
   <header>
-    <p><img src="${Majestylogo}" alt="logo"</p>
+    <img src="${Majestylogo}" alt="logo" />
     <h1>${state.header}</h1>
   </header>
 `;

@@ -1,8 +1,12 @@
 import html from "html-literal";
 
 export default () => html`
-  <section id="appointment">
-    <h2>Schedule an Appointment</h2>
+  <section class="Appointment" id="appointment">
+    <h1>Schedule an Appointment</h1>
+    <p>
+      Please fill out the form below to book a time with one of our immigration
+      advisors. Select the service you need, then choose an available time slot.
+    </p>
     <form>
       <label for="name">Enter your full name:</label>
       <input type="string" id="name" name="name" required />
