@@ -52,7 +52,6 @@ To provide a centralized, easy-to-use platform for individuals to book immigrati
 # Problem Solved
 - Reduces confusion over how to apply for immigration services
 - Eliminates the need for in-person scheduling or phone calls
-- Empowers users with accurate, updated information
 - Helps reduce wait times and missed appointments
 
 # Website Attributes
@@ -60,7 +59,7 @@ To provide a centralized, easy-to-use platform for individuals to book immigrati
 - **Images**: Diverse people, supportive visuals, flags, forms
 - **Fonts**: Sans-serif (e.g., Open Sans, Lato) for readability
 - **Logos**: Custom simple icon representing global support / immigration
-- **Navigation**: Top menu with dropdowns for Services, Appointments, Help
+- **Navigation**: Top menu with dropdowns for Home, About, Services, Appointments, Contact.
 
 #  User Story Map (Mural Link)
   https://app.mural.co/t/finalworkbootcamp5956/m/finalworkbootcamp5956/1748371071105/bc7550af312d388c198705bed39f50612e1366eb

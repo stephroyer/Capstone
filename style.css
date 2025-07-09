@@ -26,36 +26,56 @@ nav {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    background-color: red;
-    padding: 0.5rem 1rem;
+    background: linear-gradient(to right, #d32f2f, #c2185b);
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     flex-wrap: wrap;
+    border-radius: 0 0 12px 12px;
 }
 
 .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.8rem;
+    font-weight: 300;
     color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     margin: 0;
     padding: 0;
-    border-radius: 12px;
-    border: #555;
+    transition: all 0.3s ease;
+}
+
+.nav-links li {
+    transition: transform 0.3s ease;
+}
+
+.nav-links li:hover {
+    transform: translateY(-3px);
 }
 
 .nav-links a {
     color: white;
     text-decoration: none;
     font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .nav-links a:hover {
-    text-decoration: underline;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    text-decoration: none;
 }
+
 
 .hero {
     padding: 2rem;

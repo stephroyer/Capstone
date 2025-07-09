@@ -8,7 +8,6 @@
 These are the high-level goals of my users:
 - Learn about services
 - Book an appointment
-- Prepare documents
 - Get support
 
 
@@ -26,11 +25,6 @@ These are the main actions users take to accomplish their goals:
 - As a user, I want to choose a service.
 - As a user, I want to see available times.
 - As a user, I want to get a confirmation.
-
-**Submit Documents**
-- As a user, I want to know what documents are required.
-- As a user, I want to upload or prepare them.
-
 
 **Get Help**
 - As a user, I want to contact support.

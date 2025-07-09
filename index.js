@@ -6,7 +6,7 @@ import { camelCase } from "lodash";
 import emailjs from "@emailjs/browser";
 
 // import nodemailer from "nodemailer";
-
+;
 const router = new Navigo("/");
 
 function render(state = store.home) {
@@ -173,7 +173,7 @@ async function getCitiesByZipCode(zipCode) {
 }
 
 
-export default function sendEmailApt(email,name ) {
+function sendEmailApt(email,name ) {
   const templateParams = {
     name: name,
     title: "Appointment Confirmation",
@@ -194,6 +194,8 @@ export default function sendEmailApt(email,name ) {
         console.log("FAILED...", err);
       }
     );
+
+
 }
 
 
