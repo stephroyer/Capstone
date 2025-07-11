@@ -1,13 +1,16 @@
-import { header, nav, main, footer } from "./components";
+import { header, nav, main, footer, appointment, appointmentList, contact, contactList } from "./components";
 import * as store from "./store";
 import Navigo from "navigo";
 import axios from "axios";
 import { camelCase } from "lodash";
+import contactList from './components/contactlist';
 import emailjs from "@emailjs/browser";
 
 
-// import nodemailer from "nodemailer";
 
+// import nodemailer from "nodemailer";
+const API_URL = "http://localhost:3000/appointments";
+const API_URL_CONTACT = "http://localhost:3000/Contact";
 const router = new Navigo("/");
 
 function render(state = store.home) {
@@ -169,8 +172,9 @@ router.hooks({
               document.getElementById("view-appointments").addEventListener("click", () => {
                 // Replace with real fetch logic
                 contentArea.innerHTML = `<p>Appointments loaded (example data).</p>`;
-                getAppointment().then(appointments => {
-                  contentArea.innerHTML = `<ul>${appointments.map(renderAppointment).join("")}</ul>`;
+                getAppointment().then(appointments =>{
+                 contentArea.innerHTML = appointmentList( appointments.map(appointment).join(""));
+                  deleteAppointment();
                 }).catch(err => {
                   console.error("Error fetching appointments:", err);
                   contentArea.innerHTML = `<p>Error loading appointments.</p>`;
@@ -180,7 +184,8 @@ router.hooks({
               document.getElementById("View-contact").addEventListener("click", () => {
                  contentArea.innerHTML = `<p>Messages loaded (example data).</p>`;
                 getContact().then(contacts => {
-                  contentArea.innerHTML = `<ul>${contacts.map(renderContact).join("")}</ul>`;
+                  contentArea.innerHTML = contactList(contacts.map(contact).join(""));
+                  deletecontact();
                 });
             }
           );
@@ -196,29 +201,6 @@ router.hooks({
     }
 });
 
-
-        router.on({
-            "/": () => render(),
-        // The :view slot will match any single URL segment that appears directly after the domain name and a slash
-        '/:view': function(match) {
-            console.info("Route handler executing");
-            // If URL is '/about-me':
-            // match.data.view will be 'about-me'
-            // Using Lodash's camelCase to convert kebab-case to camelCase:
-            // 'about-me' becomes 'aboutMe'
-            const view = match?.data?.view ? camelCase(match.data.view) : "home";
-
-            // If the store import/object has a key named after the view
-            if (view in store) {
-                // Then the invoke the render function using the view state, using the view name
-                render(store[view]);
-            } else {
-                // If the store
-                render(store.viewNotFound);
-                console.log(`View ${view} not defined`);
-            }
-        }
-}).resolve();
 
 
 async function getCitiesByZipCode(zipCode) {
@@ -257,8 +239,6 @@ function sendEmailApt(email,name ) {
 
 
 }
-
-
 
 function sendEmailcont(name, email) {
   const templateParams2 = {
@@ -329,27 +309,72 @@ async function getContact(formData) {
             return response.data;
 })}
 
-function renderAppointment(appointment) {
-    return `
-        <section class="appointment" id="Appointment">
-            <h1>${appointment.Name}</h1>
-            <h2>${appointment.Date}</h2>
-            <p>${appointment.Services}</p>
-            <p>${appointment.Language}</p>
-            <p>${appointment.Zipcode}</p>
-
-        </section>
-
-        `
+// Delete appointment from backend
+function deleteAppointment() {
+  const buttons = document.querySelectorAll(".delete-btn");
+  buttons.forEach(button => {
+    button.addEventListener("click", async () => {
+      const id = button.value;
+      console.log("Delete button clicked for appointment ID:", button);
+      if (confirm("Are you sure you want to delete this appointment?")) {
+        try {
+          const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+          if (res.ok) {
+            getAppointment();
+          } else {
+            alert("Failed to delete appointment.");
+          }
+        } catch (err) {
+          console.error("Error deleting:", err);
+        }
+      }
+    });
+  });
 }
-function renderContact(contact) {
-    return `
-        <section class="contact" id="Contact">
-            <h1>${contact.NameUser}</h1>
-            <p>${contact.EmailUser}</p>
-            <p>${contact.MessageUser}</p>
-
-        </section>
-        `
+// Delete contactMessage from backend
+function deletecontact() {
+  const buttons = document.querySelectorAll(".delete-btn");
+  buttons.forEach(button => {
+    button.addEventListener("click", async () => {
+      const id = button.value;
+      console.log("Delete button clicked for appointment ID:", button);
+      if (confirm("Are you sure you want to delete this appointment?")) {
+        try {
+          const res = await fetch(`${API_URL_CONTACT }/${id}`, { method: "DELETE" });
+          if (res.ok) {
+            getContact();
+          } else {
+            alert("Failed to delete appointment.");
+          }
+        } catch (err) {
+          console.error("Error deleting:", err);
+        }
+      }
+    });
+  });
 }
+
+  router.on({
+            "/": () => render(),
+        // The :view slot will match any single URL segment that appears directly after the domain name and a slash
+        '/:view': function(match) {
+            console.info("Route handler executing");
+            // If URL is '/about-me':
+            // match.data.view will be 'about-me'
+            // Using Lodash's camelCase to convert kebab-case to camelCase:
+            // 'about-me' becomes 'aboutMe'
+            const view = match?.data?.view ? camelCase(match.data.view) : "home";
+
+            // If the store import/object has a key named after the view
+            if (view in store) {
+                // Then the invoke the render function using the view state, using the view name
+                render(store[view]);
+            } else {
+                // If the store
+                render(store.viewNotFound);
+                console.log(`View ${view} not defined`);
+            }
+        }
+}).resolve();
+
 
