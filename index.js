@@ -7,8 +7,7 @@ import emailjs from "@emailjs/browser";
 
 
 // import nodemailer from "nodemailer";
-;
-const API_URL = "http://localhost:3000/appointments"; // Update with your actual API URL
+
 const router = new Navigo("/");
 
 function render(state = store.home) {

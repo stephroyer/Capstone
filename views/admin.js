@@ -15,7 +15,7 @@ export default () => html`
         <button type="submit">Login</button>
       </form>
 
-      <div id="admin-dashboard" class="admin-dashboard">
+      <div id="admin-dashboard" style="display: none;">
         <h2>Welcome, to our Admin section!</h2>
         <button id="view-appointments">View Appointments</button>
         <button id="View-contact">View Messages</button>
