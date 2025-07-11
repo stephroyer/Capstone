@@ -1,7 +1,7 @@
 import html from "html-literal";
 
 export default () => html`
-  <section class="Appointment" id="appointment">
+  <section class="appointment" id="appointment">
     <h1>Schedule an Appointment</h1>
     <p>
       Please fill out the form below to book a time with one of our immigration

@@ -5,8 +5,10 @@ import axios from "axios";
 import { camelCase } from "lodash";
 import emailjs from "@emailjs/browser";
 
+
 // import nodemailer from "nodemailer";
 ;
+const API_URL = "http://localhost:3000/appointments"; // Update with your actual API URL
 const router = new Navigo("/");
 
 function render(state = store.home) {
@@ -55,7 +57,7 @@ router.hooks({
         console.log("redenring view", view);
         render(store[view]);
     },
-            after: (match) => {
+    after: (match) => {
         console.info("After hook executing");
         const view = match?.data?.view ? camelCase(match.data.view) : "home";
 
@@ -128,14 +130,73 @@ router.hooks({
 
             });
             }
+            if (view === "admin") {
 
+            function renderAdminView() {
+              //const adminSection = document.getElementById("admin");
+              const loginForm = document.getElementById("admin-login-form");
+              const dashboard = document.getElementById("admin-dashboard");
+              const contentArea = document.getElementById("admin-content");
+              const logoutBtn = document.getElementById("admin-logout");
+
+              // If already logged in, show dashboard
+              const isAdmin = sessionStorage.getItem("isAdmin");
+              if (isAdmin === "true") {
+                loginForm.style.display = "none";
+                dashboard.style.display = "block";
+              }
+
+              loginForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+                const username = loginForm.username.value;
+                const password = loginForm.password.value;
+
+                // Replace with real auth in production
+                if (username === "admin" && password === "Majesty@2025") {
+                  sessionStorage.setItem("isAdmin", "true");
+                  loginForm.style.display = "none";
+                  dashboard.style.display = "block";
+                } else {
+                  alert("Invalid login.");
+                }
+              });
+
+              logoutBtn.addEventListener("click", () => {
+                sessionStorage.removeItem("isAdmin");
+                dashboard.style.display = "none";
+                loginForm.style.display = "block";
+              });
+
+              document.getElementById("view-appointments").addEventListener("click", () => {
+                // Replace with real fetch logic
+                contentArea.innerHTML = `<p>Appointments loaded (example data).</p>`;
+                getAppointment().then(appointments => {
+                  contentArea.innerHTML = `<ul>${appointments.map(renderAppointment).join("")}</ul>`;
+                }).catch(err => {
+                  console.error("Error fetching appointments:", err);
+                  contentArea.innerHTML = `<p>Error loading appointments.</p>`;
+                });
+              });
+
+              document.getElementById("View-contact").addEventListener("click", () => {
+                 contentArea.innerHTML = `<p>Messages loaded (example data).</p>`;
+                getContact().then(contacts => {
+                  contentArea.innerHTML = `<ul>${contacts.map(renderContact).join("")}</ul>`;
+                });
+            }
+          );
+        }
+                renderAdminView();
+
+      }
             router.updatePageLinks();
             // add menu toggle to bars icon in nav bar
             document.querySelector(".menu").addEventListener("click", () => {
                 document.querySelector("nav > ul").classList.toggle("hidden--mobile");
-            });
-        }
-    });
+});
+    }
+});
+
 
         router.on({
             "/": () => render(),
@@ -200,11 +261,11 @@ function sendEmailApt(email,name ) {
 
 
 
- function sendEmailcont(name, email) {
+function sendEmailcont(name, email) {
   const templateParams2 = {
     NameUser : name,
     title: "Message Confirmation",
-    MessageUser: "Thank you for contact us.",
+    MessageUser: "Thank you for contacting us.",
     email: email
   };
 
@@ -255,3 +316,41 @@ async function saveAppointment(formData) {
       }
     });
 }
+async function getAppointment(formData) {
+    return axios.get('http://localhost:3000/appointments')
+        .then(response => {
+            console.log("Appointment retrieved successfully", response.data);
+            return response.data;
+})}
+
+async function getContact(formData) {
+    return axios.get('http://localhost:3000/Contact')
+        .then(response => {
+            console.log("Appointment retrieved successfully", response.data);
+            return response.data;
+})}
+
+function renderAppointment(appointment) {
+    return `
+        <section class="appointment" id="Appointment">
+            <h1>${appointment.Name}</h1>
+            <h2>${appointment.Date}</h2>
+            <p>${appointment.Services}</p>
+            <p>${appointment.Language}</p>
+            <p>${appointment.Zipcode}</p>
+
+        </section>
+
+        `
+}
+function renderContact(contact) {
+    return `
+        <section class="contact" id="Contact">
+            <h1>${contact.NameUser}</h1>
+            <p>${contact.EmailUser}</p>
+            <p>${contact.MessageUser}</p>
+
+        </section>
+        `
+}
+

@@ -4,8 +4,10 @@ body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: hwb(0 90% 6%);
+    background-color: hwb(0 83% 9%);
     color: #000000;
+  min-height: 100vh;
+  padding-top: 4rem;
     text-align: center;
     line-height: 1.7;
 }
@@ -97,20 +99,12 @@ section {
 }
 
 
-.home h1,
-.contact h1,
-.Appointment h1,
-.service h1,
-.About h1 {
-    font-size: 2.5rem;
-    color: #007BFF;
-    text-align: center;
-}
  .home,
  .contact,
- .Appointment,
+ .appointment,
  .service,
- .About {
+ .About,
+ .admin{
     max-width: 900px;
     margin: 3rem auto;
     padding: 2rem 2.5rem;
@@ -140,9 +134,11 @@ section {
 
 
 .about h1,
+.home h1,
 .appointment h1,
 .services h1,
-.contact h1 {
+.contact h1,
+.admin h1 {
     font-size: 2.5rem;
     color: #007BFF;
     text-align: center;
@@ -368,5 +364,40 @@ footer a:hover {
 #services strong {
     color: #000;
 }
+
+#admin .container {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border: 2px solid #ddd;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#admin form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+#admin form input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+#admin button {
+  margin: 1rem 0.5rem 0 0;
+  padding: 0.7rem 1.5rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
 
 

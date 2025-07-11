@@ -1,4 +1,5 @@
 import html from "html-literal";
+import banner from "url:../images/banner.jpeg";
 
 export default () => html`
   <section class="home" id="hero">
@@ -10,6 +11,8 @@ export default () => html`
       step of the way.
     </p>
     <p>Your trusted partner in immigration support and guidance.</p>
+
+    <img src="${banner}" alt="Banner Image" style="width: 30%; height: 30%;" />
     <h2>Our Services Include:</h2>
     <ul>
       <li>Temporary Protected Status (TPS)</li>

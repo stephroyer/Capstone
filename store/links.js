@@ -3,5 +3,6 @@ export default [
   { url: "/about", text: "About" },
   { url: "/services", text: "Services" },
   { url: "/appointment", text: "Appointment" },
-  { url: "/contact", text: "Contact" }
+  { url: "/contact", text: "Contact" },
+  { url: "/admin", text: "Admin" }
 ];
