@@ -3,14 +3,13 @@ import * as store from "./store";
 import Navigo from "navigo";
 import axios from "axios";
 import { camelCase } from "lodash";
-import contactList from './components/contactlist';
 import emailjs from "@emailjs/browser";
 
-
+const API_BASE_URL = process.env.API_BASE_URL || "http://localhost:3000";
 
 // import nodemailer from "nodemailer";
-const API_URL = "http://localhost:3000/appointments";
-const API_URL_CONTACT = "http://localhost:3000/Contact";
+const API_URL_APPOINTMENTS = `${API_BASE_URL}/appointments`;
+const API_URL_CONTACT = `${API_BASE_URL}/Contact`;
 const router = new Navigo("/");
 
 function render(state = store.home) {
@@ -37,6 +36,7 @@ router.hooks({
                         `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&units=imperial&q=st%20louis`
                     )
                     .then(response => {
+                      console.log("Weather data retrieved successfully",response);
                         // Create an object to be stored in the Home state from the response
                         store.contact.weather = {
                             city: response.data.name,
@@ -265,7 +265,7 @@ function sendEmailcont(name, email) {
 
 
 async function saveContact(formData) {
-    axios.post('http://localhost:3000/Contact', {
+    axios.post(`${API_URL_CONTACT}`, {
 
       NameUser: formData.NameUser,
       EmailUser: formData.EmailUser,
@@ -280,7 +280,7 @@ async function saveContact(formData) {
 }
 
 async function saveAppointment(formData) {
-    axios.post('http://localhost:3000/appointments', {
+    axios.post(`${API_URL_APPOINTMENTS}`, {
 
       Name: formData.name,
       Email: formData.email,
@@ -295,15 +295,15 @@ async function saveAppointment(formData) {
       }
     });
 }
-async function getAppointment(formData) {
-    return axios.get('http://localhost:3000/appointments')
+async function getAppointment() {
+    return axios.get(`${API_URL_APPOINTMENTS}`)
         .then(response => {
             console.log("Appointment retrieved successfully", response.data);
             return response.data;
 })}
 
-async function getContact(formData) {
-    return axios.get('http://localhost:3000/Contact')
+async function getContact() {
+    return axios.get(`${API_URL_CONTACT}`)
         .then(response => {
             console.log("Appointment retrieved successfully", response.data);
             return response.data;
@@ -318,7 +318,7 @@ function deleteAppointment() {
       console.log("Delete button clicked for appointment ID:", button);
       if (confirm("Are you sure you want to delete this appointment?")) {
         try {
-          const res = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+          const res = await fetch(`${API_URL_APPOINTMENTS}/${id}`, { method: "DELETE" });
           if (res.ok) {
             getAppointment();
           } else {
@@ -340,7 +340,7 @@ function deletecontact() {
       console.log("Delete button clicked for appointment ID:", button);
       if (confirm("Are you sure you want to delete this appointment?")) {
         try {
-          const res = await fetch(`${API_URL_CONTACT }/${id}`, { method: "DELETE" });
+          const res = await fetch(`${API_URL_CONTACT}/${id}`, { method: "DELETE" });
           if (res.ok) {
             getContact();
           } else {
