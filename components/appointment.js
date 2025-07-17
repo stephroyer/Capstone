@@ -2,8 +2,8 @@ import html from "html-literal";
 
 export default appointment => html`
   <section class="appointment" id="Appointment">
-    <h1>${appointment.Name}</h1>
-    <h2>${appointment.Date}</h2>
+    <h3>${appointment.Name}</h3>
+    <h4>${appointment.Date}</h4>
     <p>${appointment.Services}</p>
     <p>${appointment.Language}</p>
     <p>${appointment.Zipcode}</p>

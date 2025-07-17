@@ -8,7 +8,6 @@ import emailIcon from "url:../images/email-icon.png";
 export default state => html`
   <section class="contact" id="ContactForm">
     <h1>Contact Us</h1>
-
     <p>
       If you have any questions or need assistance, we’d love to hear from you.
       Fill out the form below or reach us through the provided contact details.

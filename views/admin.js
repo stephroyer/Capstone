@@ -21,7 +21,9 @@ export default () => html`
         <button id="View-contact">View Messages</button>
         <button id="admin-logout">Logout</button>
 
-        <div id="admin-content"></div>
+        <div id="admin-content">
+          <div class="box"></div>
+        </div>
       </div>
     </div>
   </section>
