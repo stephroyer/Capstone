@@ -171,14 +171,7 @@ section {
     color: #333;
     margin-bottom: 1rem;
 }
-/* #admin-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 40px;
-    background-color: #f0f4f8;
-} */
+
 #admin-content {
   display: flex;
   flex-wrap: wrap;
@@ -469,7 +462,13 @@ ul .contact {
   border-radius: 8px;
   background: #F9F9F9;
 }
-
+ul .appointments {
+  flex: 1 1 300px;             /* grow/shrink with a base width of 300px */
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 8px;
+  background: #F9F9F9;
+}
 
 
 
