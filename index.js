@@ -83,10 +83,6 @@ router.hooks({
                     return;
                 }
 
-                getCitiesByZipCode(zipCode).then(city => {
-                    confirmationMessage.textContent = `hello "${name}" thank you for trust us!!! Your appointment for "${service}" on ${date} has been scheduled successfully at "${city}".`;
-                });
-
                 saveAppointment({
                     name: name,
                     email: email,
@@ -98,6 +94,12 @@ router.hooks({
                 });
 
                 sendEmailApt(email,name);
+
+                   getCitiesByZipCode(zipCode).then(city => {
+                    confirmationMessage.textContent = `hello "${name}" thank you for trust us!!! Your appointment for "${service}" on ${date} has been scheduled successfully at "${city}".`;
+                }).catch(err => {
+                   confirmationMessage.textContent = `hello "${name}" thank you for trust us!!! Your appointment for "${service}" on ${date} has been scheduled successfully.`;
+                });
                 appointmentForm.reset(); // Reset the form after submission
             });
         }
